@@ -6,11 +6,21 @@ import './bootstrap.min.css';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
+import { Elements } from '@stripe/react-stripe-js';
+import { stripePromise } from './stripe';
 
 ReactDOM.render(
   <Provider store={store}>
     <React.StrictMode>
-      <App />
+      {stripePromise ? (
+        <Elements stripe={stripePromise}>
+          <App />
+        </Elements>
+      ) : (
+        <div className="container py-4">
+          Payment configuration is missing. Please contact the administrator.
+        </div>
+      )}
     </React.StrictMode>
   </Provider>,
   document.getElementById('root')

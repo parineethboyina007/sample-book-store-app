@@ -3,3 +3,21 @@
 
 # Maven build outputs
 **/target/
+
+/bookstore-frontend-react-app/.env.development.local
+/devops/secrets/payment.env
+
+# macOS
+.DS_Store
+
+# Local backups
+*.backup
+*.before-jest-fix
+/devops/secrets/payment.env
+
+# macOS
+.DS_Store
+
+# Local backups
+*.backup
+*.before-jest-fix

@@ -4,16 +4,17 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 
 /**
- * @author Devaraj Reddy, Date : 25-Jul-2020
+ * Request containing a Stripe PaymentMethod ID created by Stripe.js.
+ * Raw card details must never be sent to this backend endpoint.
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class CreatePaymentMethodRequest {
 
-    @NotNull
-    private Card card;
+    @NotBlank
+    private String paymentMethodId;
 }

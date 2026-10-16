@@ -6,7 +6,7 @@ security:
     public-key: classpath:jwt-signing-public-key.txt
 
 service:
-  stripeKey: sk_test_51HyGx6G9R9y827ntfKTizO243LzKHnaNIucO8i7apU0zuTIE5iNAes6l64aoWczGwiCnnBNsvvrgS95nfpbWa2cw00FnScmrhd
+  stripeKey: ${STRIPE_SECRET_KEY}
 
 spring:
   profiles:
@@ -88,9 +88,9 @@ spring:
         format_sql: true
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/bookstore_db?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
-    username: bookstoreDBA
-    password: PaSSworD
+    url: ${DB_URL:jdbc:mysql://localhost:3306/bookstore_db?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
 
 ---
 
@@ -112,6 +112,6 @@ spring:
         format_sql: true
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://bookstore-mysql-db:3306/bookstore_db?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
-    username: bookstoreDBA
-    password: PaSSworD
+    url: ${DB_URL:jdbc:mysql://bookstore-mysql-db:3306/bookstore_db?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}

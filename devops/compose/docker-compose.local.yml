@@ -1,0 +1,121 @@
+name: bookstore-local
+
+services:
+  eureka:
+    image: bookstore-eureka:dev
+    container_name: bookstore-eureka
+    ports:
+      - "8761:8761"
+    networks:
+      - bookstore-net
+    restart: unless-stopped
+    healthcheck:
+      test:
+        - CMD
+        - curl
+        - -fsS
+        - http://localhost:8761/
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 60s
+
+  gateway:
+    image: bookstore-api-gateway:dev
+    container_name: bookstore-gateway
+    ports:
+      - "8765:8765"
+    environment:
+      SERVER_PORT: "8765"
+      EUREKA_HOST: bookstore-eureka:8761
+    networks:
+      - bookstore-net
+    restart: unless-stopped
+    depends_on:
+      eureka:
+        condition: service_healthy
+
+  account:
+    image: bookstore-account:dev
+    container_name: bookstore-account
+    ports:
+      - "4001:4001"
+    environment:
+      SERVER_PORT: "4001"
+      SPRING_PROFILES_ACTIVE: local
+      EUREKA_HOST: bookstore-eureka:8761
+    networks:
+      - bookstore-net
+    restart: unless-stopped
+    depends_on:
+      eureka:
+        condition: service_healthy
+
+  billing:
+    image: bookstore-billing:dev
+    container_name: bookstore-billing
+    ports:
+      - "5001:5001"
+    environment:
+      SERVER_PORT: "5001"
+      SPRING_PROFILES_ACTIVE: local
+      EUREKA_HOST: bookstore-eureka:8761
+    networks:
+      - bookstore-net
+    restart: unless-stopped
+    depends_on:
+      eureka:
+        condition: service_healthy
+
+  catalog:
+    image: bookstore-catalog:dev
+    container_name: bookstore-catalog
+    ports:
+      - "6001:6001"
+    environment:
+      SERVER_PORT: "6001"
+      SPRING_PROFILES_ACTIVE: local
+      EUREKA_HOST: bookstore-eureka:8761
+    networks:
+      - bookstore-net
+    restart: unless-stopped
+    depends_on:
+      eureka:
+        condition: service_healthy
+
+  order:
+    image: bookstore-order:dev
+    container_name: bookstore-order
+    ports:
+      - "7001:7001"
+    environment:
+      SERVER_PORT: "7001"
+      SPRING_PROFILES_ACTIVE: local
+      EUREKA_HOST: bookstore-eureka:8761
+    networks:
+      - bookstore-net
+    restart: unless-stopped
+    depends_on:
+      eureka:
+        condition: service_healthy
+
+  payment:
+    image: bookstore-payment:dev
+    container_name: bookstore-payment
+    ports:
+      - "8001:8001"
+    environment:
+      SERVER_PORT: "8001"
+      SPRING_PROFILES_ACTIVE: local
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://bookstore-eureka:8761/eureka/
+    networks:
+      - bookstore-net
+    restart: unless-stopped
+    depends_on:
+      eureka:
+        condition: service_healthy
+
+networks:
+  bookstore-net:
+    external: true
+    name: bookstore-net
