@@ -4,16 +4,15 @@
 # Maven build outputs
 **/target/
 
+# Frontend local environment
 /bookstore-frontend-react-app/.env.development.local
+
+# Secrets - never commit
 /devops/secrets/payment.env
 
-# macOS
-.DS_Store
-
-# Local backups
-*.backup
-*.before-jest-fix
-/devops/secrets/payment.env
+# Runtime application logs
+**/Logs/
+*.log
 
 # macOS
 .DS_Store
